@@ -39,7 +39,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('login'))  # Redirect to login page after logout
 
-def user_register(request):
+def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
