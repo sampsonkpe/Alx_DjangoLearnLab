@@ -20,6 +20,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.shortcuts import render
 
 def user_login(request):
     if request.method == 'POST':
@@ -27,21 +28,21 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return HttpResponseRedirect(reverse('list_books'))  # or 'home' if you have it
+            return HttpResponseRedirect(reverse('list_books'))  # Redirect to a page after login
     else:
         form = AuthenticationForm()
     return render(request, 'relationship_app/login.html', {'form': form})
 
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('login'))
+    return HttpResponseRedirect(reverse('login'))  # Redirect to login page after logout
 
 def user_register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponseRedirect(reverse('login'))  # Redirect to login page after successful registration
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
