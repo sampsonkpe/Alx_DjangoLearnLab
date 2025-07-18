@@ -1,20 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.views import View
+from django.views.generic.detail import DetailView
 from .models import Book, Library
 
-# Function-Based View to list all books
+# Function-Based View (FBV)
 def list_books(request):
-    books = Book.objects.all()
-    output = "\n".join([str(book) for book in books])
-    return HttpResponse(output)
+    books = Book.objects.select_related('author').all()
+    return render(request, 'list_books.html', {'books': books})
 
-# Class-Based View to show library detail
-class LibraryDetailView(View):
-    def get(self, request, pk):
-        try:
-            library = Library.objects.get(pk=pk)
-            return HttpResponse(f"Library: {library.name}")
-        except Library.DoesNotExist:
-            return HttpResponse("Library not found", status=404)
+# Class-Based View (CBV)
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'library_detail.html'
+    context_object_name = 'library'
 
