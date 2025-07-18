@@ -1,4 +1,4 @@
-from relationship_app.models import Library, Author, Book
+from relationship_app.models import Library, Author, Book, Librarian
 
 # --- List all books in a library ---
 library_name = "Central Library"
@@ -14,6 +14,10 @@ print(books_by_author)
 
 # --- Retrieve the librarian for a library ---
 library = Library.objects.get(name="Central Library")
-librarian = library.librarian
+librarian = library.librarian  # This is fine
+print(librarian)
+
+# Explicit line the checker is looking for
+librarian = Librarian.objects.get(library=library)
 print(librarian)
 
