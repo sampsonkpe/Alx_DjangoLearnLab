@@ -1,10 +1,3 @@
-# Delete Operation
-
-## Code Run in Django Shell
-
-```python
-from relationship_app.models import Book
-
-book = Book.objects.get(title="Things Still Fall Apart")
+from bookshelf.models import Book
 book.delete()
-
+Book.objects.all()
