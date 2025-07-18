@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
-from .models import Book, Library
+from .models import Book
+from .models import Library
 
 # Function-Based View (FBV)
 def list_books(request):
@@ -10,6 +11,6 @@ def list_books(request):
 # Class-Based View (CBV)
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'library_detail.html'
+    template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
