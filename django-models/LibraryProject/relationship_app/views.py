@@ -30,10 +30,10 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return HttpResponseRedirect(reverse('list_books'))  # Redirect to a page after login
+            return HttpResponseRedirect(reverse('list_books'))  # Redirect to books list after login
     else:
         form = AuthenticationForm()
-    return render(request, 'relationship_app/login.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form})
 
 def user_logout(request):
     logout(request)
@@ -43,9 +43,9 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('login'))  # Redirect to login page after successful registration
+            user = form.save()
+            login(request, user)  # Log in user after registration
+            return HttpResponseRedirect(reverse('list_books'))
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
-
