@@ -5,8 +5,8 @@ from .views import list_books, LibraryDetailView, register, admin_view, libraria
 urlpatterns = [
     path('books/', list_books, name='list_books'),
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
-    
-    # Use Django's built-in views with template_name
+
+    # EXPLICITLY write these lines without wrapping or aliasing!
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
 
