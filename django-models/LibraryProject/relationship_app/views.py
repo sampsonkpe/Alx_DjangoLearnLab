@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from .models import Library
 from .models import Book, Library
 from .forms import BookForm  # You’ll need to create this form manually
 
