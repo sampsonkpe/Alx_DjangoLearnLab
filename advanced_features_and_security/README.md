@@ -1,29 +1,15 @@
-# Django Models and Views
+# Advanced Features and Security in Django
 
-This project explores Django model relationships, views, and query operations.
+This Django project demonstrates advanced security practices, including custom user permissions and secure access to CRUD operations on a Book model.
 
-## Tasks Completed
+## Features
 
-1. Created Django models for Library, Author, Book, and Librarian with proper relationships.
-2. Registered models in the admin interface.
-3. Created and ran migrations to reflect model definitions in the database.
-4. Populated the database with sample data using the Django shell.
-5. Queried models using the Django ORM:
-   - List all books in a library.
-   - Query all books by a specific author.
-   - Retrieve the librarian for a library.
-6. Implemented function-based and class-based views to list books and library details.
-7. Routed URLs to views appropriately.
+- Custom permissions: `can_create`, `can_edit`, `can_delete`, `can_view`
+- Permission-based access to all views
+- Role-based access control using decorators
 
-## Directory Structure
+## Running
 
-- LibraryProject/
-  - relationship_app/
-    - models.py
-    - views.py
-    - urls.py
-    - query_samples.py
-  - LibraryProject/
-    - settings.py
-    - urls.py
+```bash
+python3 manage.py runserver
 
