@@ -160,6 +160,7 @@ SECURE_SSL_REDIRECT = True  # Redirect all HTTP requests to HTTPS
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True  # Redirect all HTTP to HTTPS
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Trust X-Forwarded-Proto header to detect HTTPS
     SESSION_COOKIE_SECURE = True  # Send session cookies over HTTPS only
     CSRF_COOKIE_SECURE = True  # Send CSRF cookies over HTTPS only
     SECURE_HSTS_SECONDS = 31536000  # Enforce HTTPS for 1 year
