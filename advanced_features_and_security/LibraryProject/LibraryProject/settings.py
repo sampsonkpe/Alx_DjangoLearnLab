@@ -25,6 +25,27 @@ SECRET_KEY = 'django-insecure-m##t_gg@h6985mu&@fqs^ono53df*2ly%p5&*srlxxbw$(o&0+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+# Browser XSS filter
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent the site from being embedded in frames (Clickjacking protection)
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevent the browser from MIME-sniffing a response away from the declared content-type
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Make CSRF cookie secure (HTTPS only)
+CSRF_COOKIE_SECURE = True
+
+# Make session cookie secure (HTTPS only)
+SESSION_COOKIE_SECURE = True
+
+# Optional, recommended in production to force HTTPS
+SECURE_SSL_REDIRECT = True
+
 ALLOWED_HOSTS = []
 
 
@@ -126,3 +147,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# SECURITY SETTINGS
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
