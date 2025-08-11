@@ -15,6 +15,7 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/edit/', edit_profile, name='edit_profile'),
 
+urlpatterns = [
     # Posts
     path('post/', PostListView.as_view(), name='post-list'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
@@ -23,8 +24,9 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
 
     # Comments
-    path('post/<int:pk>/comment/new/', CommentCreateView.as_view(), name='comment-create'),
-    path('comment/<int:pk>/edit/', CommentUpdateView.as_view(), name='comment-update'),
+    path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='comment-create'),
+    path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
+]
 ]
 
