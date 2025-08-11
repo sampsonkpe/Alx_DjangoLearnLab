@@ -1,43 +1,42 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.contrib.auth import login
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, UpdateView, TemplateView
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Post
+from .forms import PostForm
 
-from .forms import RegistrationForm, UserUpdateForm
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+    ordering = ['-published_date']
 
-class CustomLoginView(LoginView):
-    template_name = 'registration/login.html'
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
 
-class CustomLogoutView(LogoutView):
-    template_name = 'registration/logged_out.html'
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/post_form.html'
+    success_url = reverse_lazy('post-list')
 
-class RegisterView(CreateView):
-    template_name = 'blog/register.html'
-    form_class = RegistrationForm
-    success_url = reverse_lazy('blog:profile')
     def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)  # log in the user after registration
-        return redirect(self.success_url)
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
-class ProfileView(LoginRequiredMixin, TemplateView):
-    template_name = 'blog/profile.html'
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/post_form.html'
+    success_url = reverse_lazy('post-list')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user_form'] = UserUpdateForm(instance=self.request.user)
-        return context
+    def test_func(self):
+        return self.request.user == self.get_object().author
 
-def edit_profile(request):
-    if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('blog:profile')
-    else:
-        form = UserUpdateForm(instance=request.user)
-    return render(request, 'blog/edit_profile.html', {'form': form})
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = 'blog/post_confirm_delete.html'
+    success_url = reverse_lazy('post-list')
+
+    def test_func(self):
+        return self.request.user == self.get_object().author
 
