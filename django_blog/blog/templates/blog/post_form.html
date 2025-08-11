@@ -1,7 +1,7 @@
+<h1>{{ view.action|default:"New Post" }}</h1>
 <form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
 </form>
-<a href="{% url 'blog:post-list' %}">Cancel</a>
 
