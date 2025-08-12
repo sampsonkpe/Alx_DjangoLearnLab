@@ -33,6 +33,6 @@ urlpatterns = [
     path('search/', search_posts, name='search'),
 
     # Filtered by Tag
-    path('tags/<str:tag_name>/', PostsByTagListView.as_view(), name='posts-by-tag'),
+    path('tags/<slug:tag_slug>/', PostsByTagListView.as_view(), name='posts-by-tag'),
 ]
 
