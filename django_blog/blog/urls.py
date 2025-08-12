@@ -1,3 +1,4 @@
+from django.urls import path
 from .views import (
     RegisterView, ProfileView, edit_profile,
     CustomLoginView, CustomLogoutView,
@@ -16,7 +17,6 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/edit/', edit_profile, name='edit_profile'),
 
-urlpatterns = [
     # Posts
     path('post/', PostListView.as_view(), name='post-list'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
