@@ -3,8 +3,8 @@ from .views import (
     RegisterView, ProfileView, edit_profile,
     CustomLoginView, CustomLogoutView,
     PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView,
-    CommentCreateView, CommentUpdateView, CommentDeleteView
-from .views import search_posts, PostsByTagListView
+    CommentCreateView, CommentUpdateView, CommentDeleteView,
+    search_posts, PostsByTagListView
 )
 
 app_name = 'blog'
@@ -29,11 +29,10 @@ urlpatterns = [
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
 
-    # Search URL
+    # Search
     path('search/', search_posts, name='search'),
 
-    # Posts filtered by tag
+    # Filtered by Tag
     path('tags/<str:tag_name>/', PostsByTagListView.as_view(), name='posts-by-tag'),
 ]
-
 
