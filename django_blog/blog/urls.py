@@ -4,7 +4,7 @@ from .views import (
     CustomLoginView, CustomLogoutView,
     PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView,
     CommentCreateView, CommentUpdateView, CommentDeleteView,
-    search_posts, PostsByTagListView
+    search_posts, PostByTagListView
 )
 
 app_name = 'blog'
@@ -33,6 +33,6 @@ urlpatterns = [
     path('search/', search_posts, name='search'),
 
     # Filtered by Tag
-    path('tags/<slug:tag_slug>/', PostsByTagListView.as_view(), name='posts-by-tag'),
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='posts-by-tag'),
 ]
 
