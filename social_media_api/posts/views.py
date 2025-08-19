@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework import generics, status, permissions
 
@@ -66,14 +67,15 @@ class FeedView(generics.ListAPIView):
         following_users = user.following.all()
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
 
-class LikePostView(APIView):
+class LikePostView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
-
+        
     def post(self, request, pk):
-        post = Post.objects.get(pk=pk)
+        post = generics.get_object_or_404(Post, pk=pk)
         like, created = Like.objects.get_or_create(user=request.user, post=post)
+
         if created:
-            # Create notification
+            # Create notification only if user is not the author
             if post.author != request.user:
                 Notification.objects.create(
                     recipient=post.author,
@@ -82,13 +84,14 @@ class LikePostView(APIView):
                     target=post
                 )
             return Response({"message": "Post liked"}, status=status.HTTP_201_CREATED)
+        
         return Response({"message": "Already liked"}, status=status.HTTP_400_BAD_REQUEST)
 
 class UnlikePostView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
-        post = Post.objects.get(pk=pk)
+        post = generics.get_object_or_404(Post, pk=pk)
         try:
             like = Like.objects.get(user=request.user, post=post)
             like.delete()
