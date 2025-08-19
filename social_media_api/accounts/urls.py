@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterView, ProfileView, FollowView, UnfollowView
+from .views import RegisterView, ProfileView, FollowUserView, UnfollowUserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -7,7 +7,6 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='login'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('profile/', ProfileView.as_view(), name='profile'),
-    path('follow/<int:user_id>/', FollowView.as_view(), name='follow'),
-    path('unfollow/<int:user_id>/', UnfollowView.as_view(), name='unfollow')
+    path('follow/<int:user_id>/', FollowUserView.as_view(), name='follow-user'),
+    path('unfollow/<int:user_id>/', UnfollowUserView.as_view(), name='unfollow-user'),
 ]
-
